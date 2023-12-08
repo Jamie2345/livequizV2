@@ -6,12 +6,8 @@ function displayQuestion(questionJson) {
   questionElement.innerHTML = questionJson.question;
   questionElement.className = 'questionText';
 
-  const questionDiv = document.createElement('div');
-  questionDiv.className = 'question-container';
-
+  const questionDiv = document.querySelector('.question-container');
   questionDiv.appendChild(questionElement);
-  mainContainer.appendChild(questionDiv);
-  
 
   console.log('question json');
   console.log(questionJson);
@@ -26,8 +22,8 @@ function displayQuestion(questionJson) {
   console.log(questionJson.question);
   console.log(questionElement);
 
-  const multipleChoiceContainer = document.createElement('div');
-  multipleChoiceContainer.className = 'multiple-choice-container';
+  const multipleChoiceContainer = document.querySelector('.multiple-choice-container');
+  multipleChoiceContainer.innerHTML = ''; // clear its html remove all old questions
 
   const playersSubmitted = document.getElementById('total-submitted');
   playersSubmitted.innerHTML = '0';
@@ -72,15 +68,11 @@ function removeOldQuestion() {
   if (!oldQuestion) {
     return;
   }
+  
   var oldMultipleChoiceContainer = document.querySelector('.multiple-choice-container');
-
-  if (oldQuestion) {
-      oldQuestion.remove();
-  }
-
-  if (oldMultipleChoiceContainer) {
-      oldMultipleChoiceContainer.remove();
-  } 
+  
+  oldQuestion.innerHTML = '';
+  oldMultipleChoiceContainer.innerHTML = '';
 }
 
 function displayAnswer(correctAnswer) {

@@ -1,11 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
 .player-container {
     display: flex;
     align-items: center;
 }
 
 body {
-  background: linear-gradient(76.8deg, rgb(121, 45, 129) 3.6%, rgb(36, 31, 98) 90.4%);
-  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(90deg, #41295a, #2F0743);
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
 }
 
 .player-container button {
@@ -13,9 +18,24 @@ body {
 }
 
 .main-container {
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-between;
+  color: #fff;
+  height: 100%;
+}
+
+.game-info-container {
+  color: #f1eff1;
+  padding: 10px 50px;
+}
+
+#base-timer-label {
+  color: #fff;
+}
+
+.playerslist-container, .waiting-room-title {
+  margin: 20px;
 }
 
 .multiple-choice-container {
@@ -23,6 +43,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px;
     height: 30vh;
+    padding: 10px 20px;
   }
 
 .multiple-choice-container p {
@@ -39,6 +60,7 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
+    color: #000;
 }
 
 .multiple-choice:hover {

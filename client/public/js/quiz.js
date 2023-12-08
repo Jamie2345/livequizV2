@@ -47,10 +47,15 @@ socket.on('connected', (quizToken, clientId, gameStarted) => {
 
         if (gameStarted) {
             console.log('game started please wait for next question before joining');
-            var pleaseWaitMessage = document.createElement('h2');
+            var pleaseWaitMessage = document.createElement('h1');
             pleaseWaitMessage.innerHTML = 'You will join once the next question starts please wait';
             pleaseWaitMessage.className = 'please-wait-msg';
-            document.body.appendChild(pleaseWaitMessage);
+
+            console.log(pleaseWaitMessage)
+
+            const questionContainer = document.querySelector('.question-container');
+            questionContainer.appendChild(pleaseWaitMessage);
+            
             startGame();
             return;
         }
