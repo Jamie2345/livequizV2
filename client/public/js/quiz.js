@@ -27,6 +27,9 @@ socket.on('connected', (quizToken, clientId, gameStarted) => {
     CLIENT_TOKEN = quizToken;
     
     function startGame() {
+        const mainContainer = document.querySelector('.main-container');
+        mainContainer.style.display = 'flex';
+
         const playersList = document.querySelector('.playerslist-container');
         playersList.remove();
 
@@ -38,6 +41,10 @@ socket.on('connected', (quizToken, clientId, gameStarted) => {
     socket.on('updatePlayers', (updatedPlayers) => {
         console.log('game started')
         console.log(gameStarted)
+
+        const mainContainer = document.querySelector('.main-container');
+        
+
         if (gameStarted) {
             console.log('game started please wait for next question before joining');
             var pleaseWaitMessage = document.createElement('h2');
@@ -47,7 +54,9 @@ socket.on('connected', (quizToken, clientId, gameStarted) => {
             startGame();
             return;
         }
-    
+
+        mainContainer.style.display = 'none';
+        
         console.log('updatePlayers')
         console.log(updatedPlayers)
         const playersList = document.querySelector('.playerslist-container');

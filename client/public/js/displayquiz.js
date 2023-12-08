@@ -1,7 +1,17 @@
 function displayQuestion(questionJson) {
+  
+  const mainContainer = document.querySelector('.main-container');
+
   const questionElement = document.createElement('h1');
   questionElement.innerHTML = questionJson.question;
   questionElement.className = 'questionText';
+
+  const questionDiv = document.createElement('div');
+  questionDiv.className = 'question-container';
+
+  questionDiv.appendChild(questionElement);
+  mainContainer.appendChild(questionDiv);
+  
 
   console.log('question json');
   console.log(questionJson);
@@ -52,15 +62,13 @@ function displayQuestion(questionJson) {
 
       });
   })
-  multipleChoiceContainer.appendChild(questionElement);
 
-  document.body.appendChild(questionElement);
-  document.body.appendChild(multipleChoiceContainer);
+  mainContainer.appendChild(multipleChoiceContainer);
 
 }
 
 function removeOldQuestion() {
-  var oldQuestion = document.querySelector('.questionText');
+  var oldQuestion = document.querySelector('.question-container');
   if (!oldQuestion) {
     return;
   }
