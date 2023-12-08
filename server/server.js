@@ -133,23 +133,32 @@ io.on('connection', (socket) => {
     console.log(foundPlayer);
 
     socket.join(roomId);
-
-    const userId = uuidV4();
-    const player = new Player(userId);
-
-    // generate a new username for the user
-    player.name = player.generateName(); 
-    quizzes[roomId].players.push(player);
-
-    // give the user a token
-    const payload = {
-      userId
+    if (!foundPlayer) {
+      const userId = uuidV4();
+      const player = new Player(userId);
+  
+      // generate a new username for the user
+      player.name = player.generateName(); 
+      quizzes[roomId].players.push(player);
+  
+      // give the user a token
+      const payload = {
+        userId
+      }
+  
+      const quizToken = jwt.sign(payload, quizSecret, { expiresIn: '1h' });
+      userQuizCookies[userId] = quizToken;
+      console.log('quiz')
+      console.log(quizzes[roomId]);
+      console.log(quizzes[roomId].quizObj.running)
+      socket.emit('connected', quizToken, userId, quizzes[roomId].quizObj.running);
+    }
+    else {
+      console.log('player reconnected')
+      foundPlayer.disconnected = false;
+      socket.emit('connected', token, foundUserId, quizzes[roomId].quizObj.running);
     }
 
-    const quizToken = jwt.sign(payload, quizSecret, { expiresIn: '1h' });
-    userQuizCookies[userId] = quizToken;
-
-    socket.emit('connected', quizToken, userId);
     io.to(roomId).emit('updatePlayers', quizzes[roomId].players);
 
     var quizObj = quizzes[roomId].quizObj;
@@ -254,7 +263,7 @@ io.on('connection', (socket) => {
       const allPlayersReady = players.every(player => player.ready);
       if (allPlayersReady) {
           io.to(roomId).emit('startGame');
-          quizzes[roomId].waiting = false;
+          quizzes[roomId].quizObj.running = true;
           console.log('game started')
   
           // start the quiz
@@ -290,7 +299,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('disconnect', () => {
-      if (userId) {
+      if (quizzes[roomId] && typeof userId !== 'undefined') {
         var playerFound = findPlayerByUUID(userId);
         if (playerFound) {
           playerFound.disconnected = true;

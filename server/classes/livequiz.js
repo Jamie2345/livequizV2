@@ -4,7 +4,7 @@ class liveQuiz {
     this.size = this.quizJson.questions.length;
     this.currentQuestion = null;
     this.questionIndex = null;
-    this.running = true;
+    this.running = false;  // false if waiting, false if leaderboard shown / game over, true if the are questions to be shown
     this.ppq = points_per_question;
   }
 

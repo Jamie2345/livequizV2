@@ -61,6 +61,9 @@ function displayQuestion(questionJson) {
 
 function removeOldQuestion() {
   var oldQuestion = document.querySelector('.questionText');
+  if (!oldQuestion) {
+    return;
+  }
   var oldMultipleChoiceContainer = document.querySelector('.multiple-choice-container');
 
   if (oldQuestion) {
@@ -74,6 +77,10 @@ function removeOldQuestion() {
 
 function displayAnswer(correctAnswer) {
   var questionShownElement = document.querySelector('.questionText');
+
+  if (!questionShownElement) {
+    return;
+  }
   questionShownElement.style.display = 'block';  // style.display
 
   var multipleChoiceContainer = document.querySelector('.multiple-choice-container');
