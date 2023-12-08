@@ -131,10 +131,11 @@ io.on('connection', (socket) => {
     const foundPlayer = quizzes[roomId].players.find(player => player.uuid === foundUserId);
 
     console.log(foundPlayer);
+    let userId;
 
     socket.join(roomId);
     if (!foundPlayer) {
-      const userId = uuidV4();
+      userId = uuidV4();
       const player = new Player(userId);
   
       // generate a new username for the user
@@ -156,6 +157,7 @@ io.on('connection', (socket) => {
     else {
       console.log('player reconnected')
       foundPlayer.disconnected = false;
+      userId = foundUserId;
       socket.emit('connected', token, foundUserId, quizzes[roomId].quizObj.running);
     }
 
@@ -260,7 +262,7 @@ io.on('connection', (socket) => {
       
   
       // if all players have pressed the ready button send a signal to the room to start the game            
-      const allPlayersReady = players.every(player => player.ready);
+      const allPlayersReady = players.every(player => player.ready || player.disconnected);
       if (allPlayersReady) {
           io.to(roomId).emit('startGame');
           quizzes[roomId].quizObj.running = true;
@@ -299,12 +301,17 @@ io.on('connection', (socket) => {
 
 
     socket.on('disconnect', () => {
+      console.log('disconnect code running');
+      console.log(userId);
       if (quizzes[roomId] && typeof userId !== 'undefined') {
         var playerFound = findPlayerByUUID(userId);
+        console.log('player disconnected')
         if (playerFound) {
           playerFound.disconnected = true;
           console.log('player disconnected')
+
           console.log(playerFound)
+          io.to(roomId).emit('updatePlayers', players);
         }
 
         const allPlayersHaveDisconnected = players.every(player => player.disconnected === true);

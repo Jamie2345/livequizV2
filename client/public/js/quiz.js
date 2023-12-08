@@ -53,6 +53,7 @@ socket.on('connected', (quizToken, clientId, gameStarted) => {
         const playersList = document.querySelector('.playerslist-container');
         playersList.innerHTML = '';
         for (let player of updatedPlayers) {
+            console.log(!player.disconnected)
             if (!player.disconnected) {
                 var playerContainer = document.createElement('div');
                 playerContainer.className = 'player-container';
