@@ -90,7 +90,7 @@ function displayLeaderboard(players) {
       boardPodium.appendChild(barBlock);
 
       // Append the bars to the container
-      if (i === 1 && players.length === 3) {
+      if (i === 1 && top3Players.length === 3) {
           // For the first player, insert before the first child
           boardContainer.insertBefore(boardPodium, boardContainer.firstChild);
       } else {

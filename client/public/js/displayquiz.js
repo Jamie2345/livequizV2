@@ -96,4 +96,10 @@ function displayAnswer(correctAnswer) {
   }
   
   correctAnswerElement.style.backgroundColor = 'green';
+
+  // set all other options to a different colour
+  var remainingChoices = multipleChoiceContainer.querySelectorAll('.multiple-choice:not([clicked="true"]):not([data-answer="' + correctAnswer + '"])');
+  remainingChoices.forEach(function(choice) {
+    choice.style.backgroundColor = '#F0F8FF'; // Set your desired color here
+  });
 }
