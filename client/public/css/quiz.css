@@ -13,6 +13,10 @@ body {
   overflow: hidden;
 }
 
+.waiting-room-title, .player-container p {
+  color: #fff;
+}
+
 .player-container button {
   margin-left: 5px;
 }
