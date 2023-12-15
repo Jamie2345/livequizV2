@@ -376,3 +376,42 @@ body {
   justify-content: center;
   text-align: center;
 }
+
+.flag-img {
+  width: 48px;
+  height: 22px;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+#backgroundMusic {
+  display: none;
+}
+
+#waiting-room-music {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#code-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#quiz-music-button {
+  margin-left: 5px;
+}
+
+#quiz-music-button, #waiting-room-music {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.music-icon {
+  font-size: 30px;
+  color: #fff;
+}

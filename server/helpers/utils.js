@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 function generateUniqueNumber(existingQuizzes) {
   let randomNumber;
   do {
@@ -7,6 +9,15 @@ function generateUniqueNumber(existingQuizzes) {
   return randomNumber;
 }
 
-module.exports = { generateUniqueNumber };
+async function checkFileExists(filePath) {
+  try {
+    await fs.access(filePath, fs.constants.F_OK);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+module.exports = { generateUniqueNumber, checkFileExists };
 
 

@@ -1,7 +1,9 @@
 class Player {
-    constructor(uuid, name, score=0, ready=false) {
+    constructor(uuid, name, country, flag, score=0, ready=false) {
         this.uuid = uuid;
         this.name = name;
+        this.country = country;
+        this.flag = flag;
         this.score = score;
         this.questionAnswer = null;
         this.ready = ready;

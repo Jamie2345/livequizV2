@@ -7,22 +7,31 @@
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="/js/quiz.js" defer></script>
     <script src="/js/timer.js" defer></script>
-    <script src="/js/leavequiz.js"></script>
-    <script src="/js/displayquiz.js"></script>
-    <script src="/js/frontendutils.js"></script>
-    <script src="/js/displayleaderboard.js"></script>
+    <script src="/js/leavequiz.js" defer></script>
+    <script src="/js/displayquiz.js" defer></script>
+    <script src="/js/frontendutils.js" defer></script>
+    <script src="/js/displayleaderboard.js" defer></script>
+    <script src="/js/music.js" defer></script>
     <link rel="stylesheet" href="css/quiz.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css" rel="stylesheet">
     <script>
         const ROOM_ID = "<%= roomId %>"
         const QUIZ_CODE = "<%= quizCode %>"
     </script>
 </head>
 <body>
+    <audio id="backgroundMusic" loop controls>
+        <source src="music/Street_Party.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
     <h2 class="waiting-room-title">Waiting Room</h2>
+    <button id="waiting-room-music" onclick="toggleMusic()"><i class="music-icon ri-volume-up-fill"></i></button>
     <div class="main-container">
-
         <div class="game-info-container">
-            <h2>Code: <%= quizCode %></h2>
+            <div id="code-container">
+                <h2>Code: <%= quizCode %></h2>
+                <button onclick="toggleMusic()" id="quiz-music-button"><i class="music-icon ri-volume-up-fill"></i></button>
+            </div>
             <div class="question-info-container">
                 <div class="questions-left-container">
                     <h3>Question Number: </h3>

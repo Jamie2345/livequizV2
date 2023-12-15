@@ -35,13 +35,17 @@ socket.on('connected', (quizToken, clientId, gameStarted) => {
 
         const waitingSign = document.querySelector('.waiting-room-title');
         waitingSign.remove();
+
+        const toggleMusicBtn = document.querySelector('#waiting-room-music');
+        toggleMusicBtn.style.display = 'none';
     }
 
     // function to update the players list on waiting screen
     socket.on('updatePlayers', (updatedPlayers) => {
         console.log('game started')
         console.log(gameStarted)
-
+        console.log('update players')
+        console.log(updatedPlayers);
         const mainContainer = document.querySelector('.main-container');
         
 
@@ -72,6 +76,12 @@ socket.on('connected', (quizToken, clientId, gameStarted) => {
                 var playerContainer = document.createElement('div');
                 playerContainer.className = 'player-container';
                 var textElement = document.createElement('p');
+
+                var imgElement = document.createElement('img');
+                imgElement.src = player.flag;
+                imgElement.className = 'flag-img';
+                console.log('player flag')
+                console.log(player.flag);
             
                 textElement.innerHTML = player.name;
                 if (player.uuid == clientId) {
@@ -90,6 +100,7 @@ socket.on('connected', (quizToken, clientId, gameStarted) => {
     
                 textElement.appendChild(statusSpanElement);
                 playerContainer.appendChild(textElement);
+                playerContainer.appendChild(imgElement);
                 
                 if (player.uuid == clientId) {
                     var readyButton = document.createElement('button');
