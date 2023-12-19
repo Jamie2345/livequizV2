@@ -47,7 +47,6 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
-  height: 30vh;
   padding: 10px 20px;
 }
 
@@ -331,6 +330,10 @@ body {
   font-size: 20px;
 }
 
+.question-container {
+  padding: 20px 0;
+}
+
 .players-submitted {
   align-items: center;
   margin-right: 20px;
@@ -370,7 +373,6 @@ body {
 
 .question-container {
   display: flex;
-  height: 40vh;
   color: #fff;
   align-items: center;
   justify-content: center;
