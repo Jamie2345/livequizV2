@@ -32,7 +32,7 @@ h1 {
 }
 
 .joinButton {
-  background: #414073;
+  background: var(--tertiary);
   color: #fff;
   border: none;
   outline: none;
