@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/quizpreview.css">
+  <link rel="stylesheet" href="/css/reviewboard.css">
+  <script src="/js/frontendutils.js"></script>
+  <script src="/js/displayreviews.js"></script>
+  <script src="/js/hostquiz.js"></script>
+  <script>
+    const QUIZ = "<%= quiz %>"
+    const quizJson = decodeJson(QUIZ)
+    console.log('quizJson')
+    console.log(quizJson)
+  </script>
+</head>
+<body>
+  <button class="host-btn" onclick="createQuizRoom(quizJson)">Host</button>
+  <div class="quiz-preview-container">
+    <div class="rating">
+      <div class="rating__average">
+      </div>
+      <div class="rating__progress">
+      </div>
+    </div>
+  </div>
+  <script>
+    displayReviews(quizJson)
+  </script>
+</body>
+</html>

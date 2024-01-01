@@ -5,32 +5,44 @@ const questionSchema = require('./Question');
 const quizSchema = new Schema({
     name: {
         type: String,
-        required: true,
+        required: true
     },
     creator: {
         type: String,
-        required: true,
+        required: true
     },
     creator_id: {
         type: String,
-        required: true,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
     },
     topics: {
         type: Array,
-        default: [],
+        default: []
     },
     // add a creator and creator id and some user stuff later on like leaderboards ranking etc. users friends share quizes etc and much more.
     // add a study feature where people can make flashcards from their decks as well as just making them.
     questions: {
         type: [questionSchema]
     },
-    likes: {
-        type: Number,
-        default: 0,
+    reviews: {
+        type: Array,
+        default: [0, 0, 0, 0, 0]
     },
-    dislikes: {
+    avg_review: {
         type: Number,
-        default: 0,
+        default: 0
+    },
+    total_reviews: {
+        type: Number,
+        default: 0
+    },
+    plays: {
+        type: Number,
+        default: 0
     }
 
 }, {timestamps: true});

@@ -1,4 +1,3 @@
-const Question = require('../models/Question');
 const Quiz = require('../models/Quiz');
 
 console.log(Quiz);
@@ -20,7 +19,6 @@ const make = (req, res) => {
         name: req.body.name,
         creator: req.body.creator,
         creator_id: req.body.creator_id,
-        description: req.body.description,
         topics: req.body.topics,
         questions: req.body.questions
       })

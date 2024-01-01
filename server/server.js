@@ -32,15 +32,18 @@ app.set('view engine', 'ejs');
 const server = http.createServer(app);
 const io = socketIO(server);
 
-const BuildRoute = require('./routes/build')
-app.use('/api', BuildRoute)
-
-const Quiz = require('./models/Quiz')
-
 //const middleware = require('./middleware/middleware');
 let bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json());
+
+const BuildRoute = require('./routes/build')
+const ReviewRoute = require('./routes/review')
+app.use('/api', BuildRoute)
+app.use('/api', ReviewRoute)
+
+const Quiz = require('./models/Quiz')
+
 
 app.set('views', path.join(__dirname, '../client/views'));
 
@@ -57,6 +60,39 @@ const geoip = require('geoip-lite');
 
 app.get('/', (req, res) => {
   res.render('index');
+});
+
+app.get('/host', (req, res) => {
+  const search = req.query.search
+  
+  if (search) {
+    Quiz.aggregate([
+      {
+        '$search': {
+          'index': 'quizzes-search-index',
+          'text': {
+            'query': search,
+            'path': {
+              'wildcard': '*'
+            }
+          }
+        }
+      }
+    ])
+    .then(quizzes => {
+      console.log(quizzes)
+      const str_json = JSON.stringify(quizzes)
+      return res.render('host', {quizzes: str_json});
+    })
+  }
+  else {
+    Quiz.find()
+    .then(quizzes => {
+      console.log(quizzes)
+      const str_json = JSON.stringify(quizzes)
+      return res.render('host', {quizzes: str_json});
+    });
+  }
 });
 
 // join and start/create quizzes
@@ -115,6 +151,29 @@ app.get('/:quiz', (req, res) => {
       res.render('invalid')
   }
 });
+
+app.get('/quiz/:quizname', (req, res) => {
+  const encodedQuizName = req.params.quizname;
+  const decodedQuizName = decodeURIComponent(encodedQuizName);
+  console.log(decodedQuizName)
+  try {
+    Quiz.findOne({name: decodedQuizName})
+    .then(foundQuiz => {
+        if (foundQuiz) {
+          const quizJson = JSON.stringify(foundQuiz)
+          console.log(quizJson)
+          res.render('quizpreview', {quiz: quizJson});
+        }
+        else {
+          res.json({ message: 'A quiz with that name does not exists' });
+        }
+    });
+  }
+  catch (error) {
+    res.json({ message: 'There was an error viewing this quiz please try again' });
+  }
+
+})
 
 io.on('connection', (socket) => {
   console.log('connection')

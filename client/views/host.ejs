@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Host a quiz</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hostquiz.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="/js/displaysearch.js"></script>
+  <script src="/js/hostquiz.js"></script>
+  <script src="/js/frontendutils.js"></script>
+  <script>
+    const QUIZZES_STRING = "<%=quizzes%>";
+    
+    // Create a dummy HTML element and set its innerHTML to the encoded string
+    const QUIZZES = decodeJson(QUIZZES_STRING);
+    console.log(QUIZZES);
+    
+  </script>
+  <script src="/js/searchbar.js" defer></script>
+</head>
+<body>
+  <div class="host-main-container">
+    <div class="main-host-container">
+      <div class="host-quiz-container">
+        <div class="search-bar-container">
+          <input type="text" class="search-bar" placeholder="Search">
+          <div class="search-buttons">
+            <button class="search-btn"><i class="ri-search-line"></i></button>
+            <button class="filter-btn"><i class="ri-equalizer-line"></i></button>
+            <button class="create-btn"><i class="ri-add-fill"></i></button>
+          </div>
+        </div>
+        <div class="search-results-container">
+        </div>
+      </div>
+    </div>
+  </div>
+  <script defer>
+    console.log(QUIZZES);
+    console.log('display quizzes')
+    displayQuizzes(QUIZZES);
+  </script>
+</body>
+</html>

@@ -30,11 +30,8 @@ socket.on('connected', (quizToken, clientId, gameStarted) => {
         const mainContainer = document.querySelector('.main-container');
         mainContainer.style.display = 'flex';
 
-        const playersList = document.querySelector('.playerslist-container');
-        playersList.remove();
-
-        const waitingSign = document.querySelector('.waiting-room-title');
-        waitingSign.remove();
+        const waitingRoom = document.querySelector('.waiting-room-container');
+        waitingRoom.remove();
 
         const toggleMusicBtn = document.querySelector('#waiting-room-music');
         toggleMusicBtn.style.display = 'none';

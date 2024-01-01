@@ -13,6 +13,7 @@
     <script src="/js/displayleaderboard.js" defer></script>
     <script src="/js/music.js" defer></script>
     <link rel="stylesheet" href="css/quiz.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css" rel="stylesheet">
     <script>
         const ROOM_ID = "<%= roomId %>"
@@ -24,7 +25,11 @@
         <source src="music/Street_Party.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
-    <h2 class="waiting-room-title">Waiting Room</h2>
+    <div class="waiting-room-container">
+        <h2 class="waiting-room-title">Waiting Room</h2>
+        <h2>Code: <%= quizCode %></h2>
+        <div class="playerslist-container"></div>
+    </div>
     <button id="waiting-room-music" onclick="toggleMusic()"><i class="music-icon ri-volume-up-fill"></i></button>
     <div class="main-container">
         <div class="game-info-container">
@@ -54,8 +59,6 @@
         </div>
         <div class="question-container"></div>
         <div class="multiple-choice-container"></div>
-    </div>
-    <div class="playerslist-container">
     </div>
     <div class="spinner-container">
         <div class="spinner"></div>

@@ -7,10 +7,11 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(90deg, #41295a, #2f0743);
+  background: var(--secondary);
   height: 100vh;
   margin: 0;
   overflow: hidden;
+  color: #fff;
 }
 
 .waiting-room-title, .player-container p {
@@ -36,11 +37,6 @@ body {
 
 #base-timer-label {
   color: #fff;
-}
-
-.playerslist-container,
-.waiting-room-title {
-  margin: 20px;
 }
 
 .multiple-choice-container {
@@ -416,4 +412,8 @@ body {
 .music-icon {
   font-size: 30px;
   color: #fff;
+}
+
+.waiting-room-container {
+  padding: 0 40px;
 }
