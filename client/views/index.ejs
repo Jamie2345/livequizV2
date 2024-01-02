@@ -8,12 +8,18 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="join-quiz-container">
-        <h1>Join a Quiz!</h1>
-        <form id="joinForm">
-            <input class="code-input" type="text" id="code" name="code" placeholder="Enter Code" required>
-            <button class="joinButton" type="submit">Join</button>
-        </form>
+    <div class="main-container">
+        <div class="join-quiz-container">
+            <h1>Join a Quiz!</h1>
+            <form id="joinForm">
+                <input class="code-input" type="text" id="code" name="code" placeholder="Enter Code" required>
+                <button class="joinButton" type="submit">Join</button>
+            </form>
+        </div>
+        <div class="host-quiz-container">
+            <p>Don't have a quiz to join?</p>
+            <p>You can host your own <a href="/host">here</a></p>
+        </div>
     </div>
 
     <script src="js/join.js"></script>
