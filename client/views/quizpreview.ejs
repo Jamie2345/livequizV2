@@ -10,25 +10,51 @@
   <script src="/js/frontendutils.js"></script>
   <script src="/js/displayreviews.js"></script>
   <script src="/js/hostquiz.js"></script>
+  <script src="/js/previewquiz.js"></script>
   <script>
     const QUIZ = "<%= quiz %>"
     const quizJson = decodeJson(QUIZ)
-    console.log('quizJson')
-    console.log(quizJson)
   </script>
 </head>
 <body>
   <button class="host-btn" onclick="createQuizRoom(quizJson)">Host</button>
   <div class="quiz-preview-container">
+    <div class="preview-info-container">
+      <div class="creator_container">
+        <img src="/images/pfps/user.png" alt="" id="creator-img">
+        <h1 id="creator-name"></h1>
+      </div>
+      <div class="quiz-info-container">
+        <h2 id="quiz-title"></h2>
+        <p id="quiz-description"></p>
+      </div>
+    </div>
     <div class="rating">
       <div class="rating__average">
       </div>
       <div class="rating__progress">
       </div>
     </div>
+    <button class="questions-button" onclick="toggleQuestions()">Click To View Questions</button>
+  </div>
+  <div class="questions-container hide">
+    <button class="back-btn" onclick="toggleQuestions()">Back</button>
+    <div id="question-number-display">
+      <span id="current-question-number">1</span>/<span id="total-questions"></span>
   </div>
   <script>
-    displayReviews(quizJson)
+    displayReviews(quizJson);
+    loadQuestions(quizJson);
+  </script>
+  <script>
+    const nameElement = document.getElementById("creator-name")
+    nameElement.innerHTML = quizJson.creator
+
+    const quizTitle = document.getElementById("quiz-title")
+    quizTitle.innerHTML = quizJson.name;
+
+    const quizDescription = document.getElementById("quiz-description")
+    quizDescription.innerHTML = quizJson.description;
   </script>
 </body>
 </html>
