@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/registerpage.css">	
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css" rel="stylesheet">
+  <script src="js/authpage.js" defer></script>  
+</head>
+<body>
+  <div class="register-page-container">
+    <div class="register-form-container">
+      <h1 id="register-title">Sign Up</h1>
+      <form id="register-form">
+        <div class="input-container">
+          <input type="text" id="username-input" placeholder="Username" required autocomplete="off">
+        </div>
+        <div class="input-container">
+          <input type="text" id="email-input" placeholder="Email address" required autocomplete="off">
+        </div>
+        <div class="input-container">
+          <input type="password" id="password-input" placeholder="Password" required>
+          <button id="view-password-btn" onclick="togglePasswordVisibility()" type="button"><i id="eye-icon" class="ri-eye-fill"></i></button>
+        </div>
+        <div class="input-container">
+          <input type="password" id="confirm-password-input" placeholder="Confirm Password" required>
+        </div>
+        <input type="submit" id="submit-btn" value="Create account">
+        <p>Already have an account?</p>
+        <p>You can login <a href="/login">here</a></p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

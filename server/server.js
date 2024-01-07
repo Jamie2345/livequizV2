@@ -9,6 +9,7 @@ const socketIO = require('socket.io');
 const { v4: uuidV4 } = require('uuid');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const cookieParser = require('cookie-parser');
 
 const port = 8080;
 
@@ -29,6 +30,8 @@ db.once('open', () => console.log('Connected to mongoose database'))
 app.use(express.static(path.join(__dirname, '../client/public')));
 app.set('view engine', 'ejs');
 
+app.use(cookieParser());
+
 const server = http.createServer(app);
 const io = socketIO(server);
 
@@ -39,10 +42,16 @@ app.use(bodyParser.json());
 
 const BuildRoute = require('./routes/build')
 const ReviewRoute = require('./routes/review')
+const AuthRoute = require('./routes/auth')
+
+const authenticate = require('./middleware/authenticate')
+
 app.use('/api', BuildRoute)
 app.use('/api', ReviewRoute)
+app.use('/api', AuthRoute)
 
 const Quiz = require('./models/Quiz')
+const User = require('./models/User')
 
 
 app.set('views', path.join(__dirname, '../client/views'));
@@ -139,17 +148,12 @@ app.post('/create', (req, res) => {
   
 });
 
-app.get('/:quiz', (req, res) => {
-  const roomId = req.params.quiz;
-  const codeToCheck = Number(req.query.code);
+app.get('/register', (req, res) => {
+  res.render('register');
+});
 
-  if (quizzes[roomId] && quizzes[roomId].joinCode === codeToCheck) {
-      console.log('quiz valid')
-      res.render('quiz', { roomId: roomId, quizCode: codeToCheck })
-  }
-  else {
-      res.render('invalid')
-  }
+app.get('/login', (req, res) => {
+  res.render('login');
 });
 
 app.get('/quiz/:quizname', (req, res) => {
@@ -174,6 +178,54 @@ app.get('/quiz/:quizname', (req, res) => {
   }
 
 })
+
+app.get('/user/:username', (req, res) => {
+  const username = req.params.username
+  console.log(username)
+  User.findOne({username: username})
+  .then(foundUser => {
+    if (foundUser) {
+      console.log(foundUser)
+      const userId = foundUser._id.toHexString()
+      console.log(userId)
+      Quiz.find({creator_id: userId})
+      .then(foundQuizzes => {
+        console.log(foundQuizzes)
+        const userJson = JSON.stringify(foundUser)
+        const quizzesJson = JSON.stringify(foundQuizzes)
+        res.render('profile', {user: userJson, quizzes: quizzesJson});
+      });
+    }
+    else {
+      res.render('invalid')
+    }
+  });
+})
+
+app.get('/profile', authenticate, (req, res) => {
+  console.log(req.userInfo)
+  Quiz.find({creator_id: req.userInfo.id})
+  .then(foundQuizzes => {
+    console.log(foundQuizzes)
+    const userJson = JSON.stringify(req.userInfo)
+    const quizzesJson = JSON.stringify(foundQuizzes)
+    res.render('clientprofile', {user: userJson, quizzes: quizzesJson});
+  });
+});
+
+app.get('/:quiz', (req, res) => {
+  const roomId = req.params.quiz;
+  const codeToCheck = Number(req.query.code);
+
+  if (quizzes[roomId] && quizzes[roomId].joinCode === codeToCheck) {
+      console.log('quiz valid')
+      res.render('quiz', { roomId: roomId, quizCode: codeToCheck })
+  }
+  else {
+      res.render('invalid')
+  }
+});
+
 
 io.on('connection', (socket) => {
   console.log('connection')

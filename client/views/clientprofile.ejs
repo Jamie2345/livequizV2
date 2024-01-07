@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/profile.css">
+  <script src="/js/frontendutils.js"></script>
+  <script src="/js/displayquizzes.js"></script>
+  <script src="/js/hostquiz.js"></script>
+  <script src="/js/profilepage.js"></script>
+  <script>
+    const QUIZZES_STRING = "<%=quizzes%>";
+    const USER_STRING = "<%=user%>";
+    console.log(USER_STRING);
+    console.log(QUIZZES_STRING);
+    // Create a dummy HTML element and set its innerHTML to the encoded string
+    const QUIZZES = decodeJson(QUIZZES_STRING);
+    console.log(QUIZZES);
+
+    const USER = decodeJson(USER_STRING);
+    console.log(USER);
+    
+  </script>
+</head>
+<body>
+  <div id="profile-container">
+    <div id="user-info-container">
+      <div id="pfp-name-container">
+        <img src="/images/pfps/user.png" alt="" id="user-img">
+        <h1 id="user-name"></h1>
+      </div>
+      <div id="user-stats-container">
+        <div class="stat-container">
+          <span id="friends">0</span>
+          <h2>Friends</h2>
+        </div>
+        <div class="stat-container">
+          <span id="posts">0</span>
+          <h2>Posts</h2>
+        </div>
+        <div class="stat-container">
+          <span id="saves">0</span>
+          <h2>Saves</h2>
+        </div>
+      </div>
+      <div id="avg-review-container">
+        <div class="stat-container">
+          <span id="avg-review">4.4</span>
+          <div class="star-outer">
+            <div class="star-inner">
+
+            </div>
+          </div>
+          <h2 id="average-review">Average review</h2>
+        </div>
+      </div>
+    </div>
+    <div id="quizzes-container">
+      <h1 id="quizzes-published-title">Published Quizzes</h1>
+      
+    </div>
+  </div>
+  <script>
+    
+    if (QUIZZES.length == 0) {
+      const quizzesContainer = document.getElementById('quizzes-container');
+      const noQuizzesMsg = document.createElement('h3');
+      noQuizzesMsg.innerHTML = 'This user has not published any quizzes yet';
+      noQuizzesMsg.id = 'no-quizzes-msg';
+      quizzesContainer.appendChild(noQuizzesMsg);
+    }
+    else {
+      displayQuizzes(QUIZZES); // forgot to actually pass in QUIZZES here. took 1 hour to figure it out. I am not happy.
+      displayQuizzesInfo(QUIZZES);
+    }
+
+    displayUserInfo(USER);
+  </script>
+</body>
+</html>

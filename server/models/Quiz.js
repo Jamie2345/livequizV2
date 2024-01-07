@@ -43,6 +43,10 @@ const quizSchema = new Schema({
     plays: {
         type: Number,
         default: 0
+    },
+    saves: {
+        type: Number,
+        default: 0
     }
 
 }, {timestamps: true});

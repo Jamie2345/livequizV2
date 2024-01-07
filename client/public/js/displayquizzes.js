@@ -1,19 +1,20 @@
 function displayQuizzes(quizzes) {
-  const resultsContainer = document.querySelector('.search-results-container');
+  console.log(quizzes);
+  const resultsContainer = document.getElementById('quizzes-container');
   console.log('resultscontainer')
   console.log(resultsContainer);
   
   quizzes.forEach(quiz => {
     const searchResult = document.createElement('div');
-    searchResult.className = 'search-result';
+    searchResult.className = 'quiz';
 
     const quizHTML = `
     <div class="quiz-info-container">
       <div class="main-details-container">
         <h2 class="quiz-title">${quiz.name}</h2>
         <div class="creator-container">
-          <img src="images/pfps/user.png" alt="" class="creator-img">
-          <h3 class="quiz-creator">${quiz.creator}</h3>
+          <a href='/user/${quiz.creator}'><img src="/images/pfps/user.png" alt="" class="creator-img"></a>
+          <h3 class="quiz-creator"><a href='/user/${quiz.creator}'>${quiz.creator}</a></h3>
         </div>
         <p class="description">${quiz.description}</p>
       </div>
@@ -36,6 +37,6 @@ function displayQuizzes(quizzes) {
       
       window.location.href = `/quiz/${encodedName}`;
     })
-  
+
   })
 }

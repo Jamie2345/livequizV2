@@ -1,0 +1,273 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--primary);
+  color: var(--text-color);
+  font-family: "Poppins", sans-serif;
+}
+
+#profile-container {
+  min-height: 100vh;
+  background-color: var(--primary);
+  display: grid;
+  place-items: center;
+  color: var(--text-color);
+  max-width: 100%;
+}
+
+#user-info-container {
+  width: 75vw;
+  display: flex;
+  align-items: center;
+  column-gap: 2rem;
+  height: 100%;
+  max-height: 200px;
+}
+
+#user-stats-container, #pfp-name-container, #avg-review-container {
+  background-color: var(--secondary);
+  padding: 1rem;
+  border-radius: .8rem;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#pfp-name-container {
+  width: 20%;
+}
+
+#user-stats-container {
+  width: 60%;
+}
+
+#avg-review-container {
+  width: 20%;
+}
+
+
+#user-img {
+  width: 100px;
+  border-radius: 50%;
+}
+
+.creator-img {
+  width: 50px;
+  border-radius: 50%;
+}
+
+#user-name {
+  font-size: 2rem;
+  margin-top: 5px;
+}
+
+#quizzes-container {
+  width: 75vw;
+  padding: 1rem 0;
+  border-radius: .8rem;
+  background-color: var(--secondary);
+  display: flex;
+}
+
+
+
+
+#user-stats-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+
+.star-outer {
+  position: relative;
+  font-size: 2rem;
+  display: inline-block;
+}
+
+.star-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 0;
+} 
+
+.star-outer::before {
+  content: '\2605 \2605 \2605 \2605 \2605';
+  color: #fff8;
+}
+
+.star-inner::before {
+  content: '\2605 \2605 \2605 \2605 \2605';
+  color: gold;
+}
+
+.stat-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.stat-container h2 {
+  font-size: .8rem;
+  font-weight: 400;
+}
+
+#average-review {
+  margin-top: 5px;
+}
+
+
+
+#quizzes-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 75vw;
+  flex-direction: column;
+}
+
+.quiz {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  color: black;
+}
+
+.quiz {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.quiz-info-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quiz-stats-container {
+  height: 100%;
+  width: 100%;
+  max-width: 300px;
+}
+
+.main-details-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  margin: 0;
+}
+
+.main-stats-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.creator-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.quiz-creator {
+  margin: 0 0 0 10px;
+}
+
+.quiz-title {
+  margin: 0;
+}
+
+.stars-icon {
+  font-style:normal;
+  display:inline-block;
+  position: relative;
+  unicode-bidi: bidi-override;
+}
+.stars-icon::before { 
+  display:block;
+  content: '★★★★★';
+  color: #ddd;
+}
+.stars-icon::after {
+  position: absolute;
+  top: 0;
+  content: '★★★★★';
+  width: calc((var(--star-rating)/5) * 100%);
+  color: orange;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+}
+
+.stars-icon {
+  font-size: 2rem;
+  line-height: 2rem; /* Add this line */
+  margin-bottom: 10px;
+}
+
+
+.quiz-stats-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.extra-info-container p {
+  margin: 0;
+}
+
+.quiz-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quiz-views {
+  margin-right: 10px;
+}
+
+.quiz {
+  margin-bottom: 20px;
+}
+
+.quiz:hover {
+  background-color: #CCC;
+}
+
+.quiz:last-child {
+  margin-bottom: 10px;
+}
+
+#quizzes-published-title {
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+#no-quizzes-msg {
+  font-size: 1rem;
+  font-weight: 300;
+  padding: 100px;
+}
+
+.creator-container a {
+  color: #000;
+  text-decoration: none;
+}
