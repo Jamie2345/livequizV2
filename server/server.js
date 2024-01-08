@@ -43,12 +43,14 @@ app.use(bodyParser.json());
 const BuildRoute = require('./routes/build')
 const ReviewRoute = require('./routes/review')
 const AuthRoute = require('./routes/auth')
+const FriendRoute = require('./routes/friend');
 
 const authenticate = require('./middleware/authenticate')
 
 app.use('/api', BuildRoute)
 app.use('/api', ReviewRoute)
 app.use('/api', AuthRoute)
+app.use('/api', authenticate, FriendRoute)
 
 const Quiz = require('./models/Quiz')
 const User = require('./models/User')
@@ -131,7 +133,8 @@ app.post('/create', (req, res) => {
               quizzes[uuid] = {
                   joinCode: code,
                   quizObj: new liveQuiz(foundQuiz),   // change this so instead of the db as parameter it is the entire quiz json
-                  players: []
+                  players: [],
+                  quiz: foundQuiz
               };
  
               res.json({ code, uuid });
@@ -412,6 +415,15 @@ io.on('connection', (socket) => {
           console.log('quiz over');
           if (quizzes[roomId]) {
             io.to(roomId).emit('displayLeaderboard', players);
+            console.log('Quiz')
+            console.log(quizzes[roomId].quiz);
+            const foundQuiz = quizzes[roomId].quiz
+            foundQuiz.plays++;
+
+            foundQuiz.save()
+            .then(foundQuiz => {
+              console.log(foundQuiz);
+            });
           }
       }
     }

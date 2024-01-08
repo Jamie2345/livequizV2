@@ -44,6 +44,7 @@
           <span id="saves">0</span>
           <h2>Saves</h2>
         </div>
+        <button id="friend-btn">Add Friend</button>
       </div>
       <div id="avg-review-container">
         <div class="stat-container">
@@ -76,6 +77,125 @@
     }
 
     displayUserInfo(USER);
+  </script>
+  <script>
+    const friendBtn = document.getElementById('friend-btn');
+
+    let requested = false;
+    let friends = false;
+
+    fetch(`/api/friend_status?checkFriend=${USER._id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data)
+          if (data.friends) {
+            friendBtn.innerHTML = 'Unfriend';	
+            friends = true;
+          }
+          else if (data.requested) {
+            friendBtn.innerHTML = 'Requested';
+            requested = true;
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+    
+
+    friendBtn.addEventListener('click', () => {
+      if (!friends && !requested) {
+        fetch('/api/request', {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userToRequest: USER._id })
+        })
+        .then(response => {
+          console.log(response);
+          if (response.ok) {
+            friendBtn.innerHTML = 'Requested';
+            requested = true;
+            return;
+          }
+          return response.json()
+        })
+        .then(data => {
+            if (data) {
+              if (data.message) {
+                alert(data.message);
+              }
+              else {
+                console.log('Error');
+              }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+      }
+
+      else if (requested) {
+        fetch('/api/unrequest', {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ unrequestUser: USER._id })
+        })
+        .then(response => {
+          console.log(response);
+          if (response.ok) {
+            friendBtn.innerHTML = 'Add Friend';
+            requested = false;
+            friends = false;
+            return;
+          }
+          return response.json()
+        })
+        .then(data => {
+          if (data) {
+            if (data.message) {
+              alert(data.message);
+            }
+            else {
+              console.log('Error');
+            }
+          }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+      }
+
+      else if (friends) {
+        fetch('/api/unfriend', {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ unfriendUser: USER._id })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+              friendBtn.innerHTML = 'Add Friend';
+            }
+            else {
+              console.log('Error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+      }
+
+    })
   </script>
 </body>
 </html>

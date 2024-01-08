@@ -271,3 +271,12 @@ body {
   color: #000;
   text-decoration: none;
 }
+
+#friend-btn {
+  padding: 1rem;
+  border-radius: .8rem;
+  background-color: var(--tertiary);
+  cursor: pointer;
+  border: none;
+  color: var(--text-color)
+}
