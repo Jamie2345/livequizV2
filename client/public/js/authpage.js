@@ -32,7 +32,8 @@ function loginSubmit() {
       headers: {
           'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      credentials: 'include' // include cookies
   })
   .then(response => response.json())
   .then(data => {

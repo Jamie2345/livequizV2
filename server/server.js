@@ -69,6 +69,12 @@ const { generateUniqueNumber } = require('./helpers/utils'); // Adjust the path 
 
 const geoip = require('geoip-lite');
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://livequiz.onrender.com');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
 app.get('/', (req, res) => {
   res.render('index');
 });
