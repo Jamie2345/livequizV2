@@ -26,7 +26,7 @@ const register = (req, res) => {
       })
     }
 
-    else if (req.body.username.contains(" ")) {
+    else if (/\s/.test(req.body.username)) {
       res.json({
         message: 'Username cannot contain spaces'
       })
