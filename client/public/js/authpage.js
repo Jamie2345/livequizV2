@@ -27,7 +27,7 @@ function loginSubmit() {
   };
 
   // Send a POST request to your backend API
-  fetch('http://localhost:8080/api/login', {
+  fetch('/api/login', { // forgot that i needed to change localhost to be relative path instead once I was ready to push to a server / hosting (took a whole hour to find this error)
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
