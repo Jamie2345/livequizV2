@@ -89,7 +89,7 @@ function registerSubmit() {
         alert(data.message);
       }
       else {
-        window.location.href = '/profile'; // Redirect to login page
+        window.location.href = '/login'; // Redirect to login page
       }
   })
   .catch(error => {
