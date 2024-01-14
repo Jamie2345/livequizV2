@@ -5,8 +5,13 @@ console.log(Quiz);
 
 
 const make = (req, res) => {
-  console.log(req.body);
-  console.log(req);
+  const userId = req.userInfo.id
+  const username = req.userInfo.username
+  const quizName = req.body.name
+  const description = req.body.description
+  const topics = req.body.topics
+  const questions = req.body.questions
+
   Quiz.findOne({name: req.body.name})
   .then(quiz => {
     if (quiz) {
@@ -17,12 +22,12 @@ const make = (req, res) => {
     }
     else {
       let newQuiz = new Quiz({
-        name: req.body.name,
-        creator: req.body.creator,
-        creator_id: req.body.creator_id,
-        description: req.body.description,
-        topics: req.body.topics,
-        questions: req.body.questions
+        name: quizName,
+        creator: username,
+        creator_id: userId,
+        description: description,
+        topics: topics,
+        questions: questions
       })
 
       newQuiz.save()
@@ -39,14 +44,74 @@ const make = (req, res) => {
 };
 
 const add = (req, res) => {
-  const body = req.body;
-  res.json(body);
+  const userId = req.userInfo.id
+  const quizName = req.body.name
+
+  Quiz.findOne({$and: [{name: quizName}, {creator_id: userId}]})
+  .then(foundQuiz => {
+    foundQuiz.questions.push(req.body.question)
+    foundQuiz.save()
+    .then(saveQuiz => {
+      console.log('Quiz saved')
+      res.status(200).json(saveQuiz)
+    })
+    .catch(error => {
+      res.json({
+        message: 'An error occurred please try again later'
+      })
+    })
+  })
 };
 
 const edit = (req, res) => {
-  const body = req.body;
-  res.json(body);
+  const userId = req.userInfo.id;
+  const quizName = req.body.name;
+  const description = req.body.description;
+  const updatedName = req.body.updatedName;
+  const questions = req.body.questions;
+
+  // Check if the updatedName is already in use by another quiz
+  Quiz.findOne({ $and: [{ name: updatedName }, { creator_id: { $ne: userId } }] })
+    .then(existingQuiz => {
+      if (existingQuiz) {
+        return res.status(400).json({ error: 'Quiz name already in use by another user' });
+      }
+
+      // Proceed with updating the quiz
+      Quiz.findOne({ $and: [{ name: quizName }, { creator_id: userId }] })
+        .then(foundQuiz => {
+          if (!foundQuiz) {
+            return res.status(404).json({ error: 'Quiz not found' });
+          }
+
+          if (description) foundQuiz.description = description;
+          if (updatedName) foundQuiz.name = updatedName;
+          if (questions) foundQuiz.questions = questions;
+
+          foundQuiz.save()
+            .then(savedQuiz => {
+              console.log('Quiz saved');
+              res.status(200).json(savedQuiz);
+            })
+            .catch(error => {
+              res.status(500).json({
+                message: 'An error occurred, please try again later'
+              });
+            });
+        })
+        .catch(error => {
+          res.status(500).json({
+            message: 'An error occurred, please try again later'
+          });
+        });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'An error occurred, please try again later'
+      });
+    });
 };
+
 
 
 module.exports = {

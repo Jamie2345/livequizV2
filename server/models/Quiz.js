@@ -47,6 +47,10 @@ const quizSchema = new Schema({
     saves: {
         type: Number,
         default: 0
+    },
+    access: {
+        type: String,
+        default: 'Draft'
     }
 
 }, {timestamps: true});

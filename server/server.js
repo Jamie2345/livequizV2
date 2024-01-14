@@ -47,7 +47,7 @@ const FriendRoute = require('./routes/friend');
 
 const authenticate = require('./middleware/authenticate')
 
-app.use('/api', BuildRoute)
+app.use('/api', authenticate, BuildRoute)
 app.use('/api', ReviewRoute)
 app.use('/api', AuthRoute)
 app.use('/api', authenticate, FriendRoute)
