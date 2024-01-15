@@ -35,7 +35,12 @@ function loginSubmit() {
       body: JSON.stringify(data),
       credentials: 'include' // include cookies
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
   .then(data => {
       // Handle the response (e.g., get and use the access token)
       console.log(data);
@@ -82,7 +87,12 @@ function registerSubmit() {
       body: JSON.stringify(data),
       credentials: 'include' // include cookies
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
   .then(data => {
       // Handle the response (e.g., show success message or redirect to login)
       console.log(data)
