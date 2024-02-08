@@ -95,6 +95,9 @@ app.get('/host', (req, res) => {
             }
           }
         }
+      },
+      {
+        '$match': { 'access': { '$ne': 'Draft' } } // Filter out quizzes with access field not equal to "Draft"
       }
     ])
     .then(quizzes => {
@@ -104,11 +107,11 @@ app.get('/host', (req, res) => {
     })
   }
   else {
-    Quiz.find()
+    Quiz.find({ access: { $ne: "Draft" } }) // Regular find query without search
     .then(quizzes => {
-      console.log(quizzes)
-      const str_json = JSON.stringify(quizzes)
-      return res.render('host', {quizzes: str_json});
+      console.log(quizzes);
+      const str_json = JSON.stringify(quizzes);
+      return res.render('host', { quizzes: str_json });
     });
   }
 });
@@ -222,6 +225,43 @@ app.get('/profile', authenticate, (req, res) => {
     res.render('clientprofile', {user: userJson, quizzes: quizzesJson});
   });
 });
+
+app.get('/quizbuilder', authenticate, (req, res) => {
+  const questionNumber = req.questionNumber;
+
+
+
+  res.render('quizbuilder');
+})
+
+app.get('/quizbuilder/:quizName/:questionNumber', authenticate, (req, res) => {
+  const questionNumber = req.params.questionNumber;
+  const quizName = req.params.quizName;
+  const creator = req.userInfo.username;
+  const creator_id = req.userInfo.id;
+
+  console.log(creator,  creator_id)
+
+  console.log(questionNumber)
+  console.log(quizName)
+
+  Quiz.findOne({name: quizName, creator: creator, creator_id: creator_id})
+  .then(foundQuiz => {
+    if (foundQuiz) {
+      console.log(foundQuiz)
+      quizJson = JSON.stringify(foundQuiz)
+      res.render('quizbuilder', {quiz: quizJson});
+      return;
+    }
+    else {
+      res.render('invalid');
+    }
+  })  
+})
+
+app.get('/createQuiz', authenticate, (req, res) => {
+  res.render('createquiz')
+})
 
 app.get('/:quiz', (req, res) => {
   const roomId = req.params.quiz;

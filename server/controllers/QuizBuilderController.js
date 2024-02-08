@@ -12,6 +12,8 @@ const make = (req, res) => {
   const topics = req.body.topics
   const questions = req.body.questions
 
+  console.log(userId, username, quizName)
+
   Quiz.findOne({name: req.body.name})
   .then(quiz => {
     if (quiz) {
@@ -35,6 +37,7 @@ const make = (req, res) => {
         res.json(newQuiz)
       })
       .catch(error => {
+        console.log(error)
         res.json({
           message: 'An error occurred please try again later'
         })
@@ -47,19 +50,32 @@ const add = (req, res) => {
   const userId = req.userInfo.id
   const quizName = req.body.name
 
+  console.log(userId)
+
+  console.log(quizName)
+
   Quiz.findOne({$and: [{name: quizName}, {creator_id: userId}]})
   .then(foundQuiz => {
-    foundQuiz.questions.push(req.body.question)
-    foundQuiz.save()
-    .then(saveQuiz => {
-      console.log('Quiz saved')
-      res.status(200).json(saveQuiz)
-    })
-    .catch(error => {
-      res.json({
-        message: 'An error occurred please try again later'
+    if (foundQuiz) {
+
+      foundQuiz.questions.push(req.body.question)
+      foundQuiz.save()
+      .then(saveQuiz => {
+        console.log('Quiz saved')
+        res.status(200).json(saveQuiz)
       })
-    })
+      .catch(error => {
+        res.json({
+          message: 'An error occurred please try again later'
+        })
+      })
+    }
+    else {
+      console.log('quiz not found')
+      res.status(404).json({
+        'message': 'A quiz with that name does not exist'
+      })
+    }
   })
 };
 

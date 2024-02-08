@@ -17,7 +17,6 @@ const quizSchema = new Schema({
     },
     description: {
         type: String,
-        required: true
     },
     topics: {
         type: Array,

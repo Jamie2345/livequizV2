@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/quizbuilder.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="/js/quizbuilder.js"></script>
+    <script src="/js/frontendutils.js"></script>
+    <script>
+        const QUIZ_JSON = "<%= quiz %>"
+        
+        const QUIZ = decodeJson(QUIZ_JSON)
+        console.log(QUIZ)
+        var parsedUrl = new URL(document.location.href);
+
+        // Get the pathname from the parsed URL and decode it
+        var decodedPathname = decodeURIComponent(parsedUrl.pathname);
+
+        // Split the pathname by '/' and get the last part
+        var pathComponents = decodedPathname.split('/');
+        var index = Number(pathComponents[pathComponents.length - 1])-1;
+
+        if (index < QUIZ.questions.length) {
+            const currentQuestion = QUIZ.questions[index];
+            console.log(currentQuestion);
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                // This function will run after the HTML is fully loaded
+                displayStoredQuestion(currentQuestion);
+            });
+          
+        }
+        else {
+            const currentQuestion = null;
+        }
+
+        console.log(QUIZ.questions.length)
+        console.log(index)
+    </script>
+</head>
+<body>
+    <div class="question-container">
+
+        <div class="question-box">
+            <textarea class="expandingTextarea" id="question-input" oninput="autoExpand(this)" placeholder="Enter question"></textarea>
+            <script>
+                function autoExpand(textarea) {
+                  // Reset textarea height to auto in order to get the new scrollHeight
+                  const length = textarea.value.length;
+                  console.log(length)
+                  const calc_length = (length * 12) + 25
+                  const calc_height = 30 * (1 + (Math.floor(calc_length / 800))) + 'px';
+                  console.log(calc_height);
+                  textarea.style.height = calc_height;
+                  textarea.style.width = calc_length + 'px';
+                  // Set the new height to match the scrollHeight
+                  textarea.style.height = `${textarea.scrollHeight}px`;
+                }
+            </script>
+        <div class="multiple-choice-container">
+            <div class="multiple-choice" onclick="buildPopup(0)">
+                <i class="ri-add-fill"></i>
+            </div>
+            <div class="multiple-choice" onclick="buildPopup(1)">
+                <i class="ri-add-fill"></i>
+            </div>
+            <div class="multiple-choice" onclick="buildPopup(2)">
+                <i class="ri-add-fill"></i>
+            </div>
+            <div class="multiple-choice" onclick="buildPopup(3)">
+                <i class="ri-add-fill"></i>
+            </div>
+        </div>
+        <textarea class="expandingTextarea" id="answer-input" oninput="autoExpand(this)" placeholder="Enter answer"></textarea>
+        </div>
+        <button class="add-question-btn" onclick="sumbitQuestion()">Add Question</button>
+    </div>
+    <div class="pop-up hide-popup" id="popup1">
+        <button class="popup-close" id="task-add-close-button" onclick="closePopup()">×</button>
+        <h1>Add Answer</h1>
+        <input type="text" class="multiple-choice-input" placeholder="Enter an answer">
+        <div id="option-btns-container">
+            <button type="button" id="add-question" onclick="addAnswer(0)">Add</button>
+            <button type="button" id="cancel-question" onclick="cancelPopup(0)">Cancel</button>
+        </div>
+    </div>
+    <div class="pop-up hide-popup" id="popup2">
+        <button class="popup-close" id="task-add-close-button" onclick="closePopup()">×</button>
+        <h1>Add Answer</h1>
+        <input type="text" class="multiple-choice-input" placeholder="Enter an answer">
+        <div id="option-btns-container">
+            <button type="button" id="add-question" onclick="addAnswer(1)">Add</button>
+            <button type="button" id="cancel-question" onclick="cancelPopup(1)">Cancel</button>
+        </div>
+    </div>
+    <div class="pop-up hide-popup" id="popup3">
+        <button class="popup-close" id="task-add-close-button" onclick="closePopup()">×</button>
+        <h1>Add Answer</h1>
+        <input type="text" class="multiple-choice-input" placeholder="Enter an answer">
+        <div id="option-btns-container">
+            <button type="button" id="add-question" onclick="addAnswer(2)">Add</button>
+            <button type="button" id="cancel-question" onclick="cancelPopup(2)">Cancel</button>
+        </div>
+    </div>
+    <div class="pop-up hide-popup" id="popup4">
+        <button class="popup-close" id="task-add-close-button" onclick="closePopup()">×</button>
+        <h1>Add Answer</h1>
+        <input type="text" class="multiple-choice-input" placeholder="Enter an answer">
+        <div id="option-btns-container">
+            <button type="button" id="add-question" onclick="addAnswer(3)">Add</button>
+            <button type="button" id="cancel-question" onclick="cancelPopup(3)">Cancel</button>
+        </div>
+    </div>
+</body>
+</html>
