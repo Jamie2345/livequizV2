@@ -17,6 +17,7 @@ const quizSchema = new Schema({
     },
     description: {
         type: String,
+        default: 'A quizIt.com quiz'
     },
     topics: {
         type: Array,

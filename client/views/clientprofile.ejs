@@ -6,8 +6,9 @@
   <title>Document</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/profile.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css" rel="stylesheet">
   <script src="/js/frontendutils.js"></script>
-  <script src="/js/displayquizzes.js"></script>
+  <script src="/js/displayclientquizzes.js"></script>
   <script src="/js/hostquiz.js"></script>
   <script src="/js/profilepage.js"></script>
   <script>
@@ -62,6 +63,24 @@
       
     </div>
   </div>
+  <div class="pop-up hide-popup" id="descriptionPopup">
+    <button class="popup-close">×</button>
+    <h1>Edit Description</h1>
+    <input type="text" id="edit-description-input" placeholder="Enter description">
+    <div id="option-btns-container">
+        <button type="button" class="save-btn" onclick="editDescription()">Save</button>
+        <button type="button" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+  <div class="pop-up hide-popup" id="namePopup">
+    <button class="popup-close">×</button>
+    <h1>Edit Quiz Name</h1>
+    <input type="text" id="edit-name-input" placeholder="Enter description">
+    <div id="option-btns-container">
+        <button type="button" class="save-btn" onclick="editQuizName()">Save</button>
+        <button type="button" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
   <script>
     
     if (QUIZZES.length == 0) {
@@ -72,7 +91,7 @@
       quizzesContainer.appendChild(noQuizzesMsg);
     }
     else {
-      displayQuizzes(QUIZZES); // forgot to actually pass in QUIZZES here. took 1 hour to figure it out. I am not happy.
+      displayClientQuizzes(QUIZZES); // forgot to actually pass in QUIZZES here. took 1 hour to figure it out. I am not happy.
       displayQuizzesInfo(QUIZZES);
     }
 

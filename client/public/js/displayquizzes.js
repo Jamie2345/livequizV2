@@ -16,7 +16,9 @@ function displayQuizzes(quizzes) {
           <a href='/user/${quiz.creator}'><img src="/images/pfps/user.png" alt="" class="creator-img"></a>
           <h3 class="quiz-creator"><a href='/user/${quiz.creator}'>${quiz.creator}</a></h3>
         </div>
-        <p class="description">${quiz.description}</p>
+        <div class="description-container">
+          <p class="description">${quiz.description}</p>
+        </div>
       </div>
       <div class="quiz-stats-container">
           <i class="stars-icon" style="--star-rating: ${quiz.avg_review};"></i>

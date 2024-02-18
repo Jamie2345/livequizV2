@@ -252,6 +252,10 @@ body {
   background-color: #CCC;
 }
 
+.quiz btn:hover {
+  background-color: green;
+}
+
 .quiz:last-child {
   margin-bottom: 10px;
 }
@@ -279,4 +283,133 @@ body {
   cursor: pointer;
   border: none;
   color: var(--text-color)
+}
+
+.description-container, .title-container {
+  display: flex;
+  align-items: center;
+}
+
+.edit-description-btn, .edit-name-btn {
+  margin: 0 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-description-btn {
+  width: 18px;
+  height: 18px;
+}
+
+.edit-name-btn {
+  width: 20px;
+  height: 20px;
+}
+
+.edit-questions-btn {
+  margin-top: 30px;
+  padding: 1rem;
+  border-radius: .8rem;
+  background-color: var(--secondary);
+  cursor: pointer;
+  border: none;
+  color: var(--text-color)
+}
+
+.pop-up {
+  position: absolute;
+  padding: 1rem;
+  border-radius: .8rem;
+  display: flex;
+  width: 75vw;
+  height: 50vh;
+  background-color: var(--primary);
+  color: #fff;
+  top: 40%;
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  width: 100%;
+  max-width: 700px;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 5px 30px rgba(0,0,0,0.30);
+  transition: 0.5s;
+}
+
+.pop-up.active {
+  top: 50%;
+  visibility: visible;
+  opacity: 1;
+  transition: 0.5s;
+}
+
+.popup-close {
+  padding: 0px 10px 10px 10px;
+  border: none;
+  background: none;
+  padding: 0;
+  color: white;
+  font-size: 2rem;
+  color: #777;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  color: var(--text-color);
+}
+
+.pop-up {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+#option-btns-container {
+  display: flex;
+  width: 75%;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 350px;
+}
+
+#option-btns-container button {
+  padding: 20px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 125px;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.save-btn {
+  background-color: var(--tertiary);
+}
+
+.cancel-btn {
+  background-color: red;
+}
+
+#edit-description-input, #edit-name-input {
+  width: 75%;
+  max-height: 50px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: 1s;
+  outline-color: #02394a;
+}
+
+#edit-description-input:focus, #edit-name-input:focus {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+#edit-description-input::placeholder, #edit-name-input::placeholder {
+  color: #000;
+  text-align: left;
 }
