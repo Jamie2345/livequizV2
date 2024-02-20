@@ -9,6 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.7.0/fonts/remixicon.css" rel="stylesheet">
   <script src="/js/frontendutils.js"></script>
   <script src="/js/displayclientquizzes.js"></script>
+  <script src="/js/closepopups.js" defer></script>
   <script src="/js/hostquiz.js"></script>
   <script src="/js/profilepage.js"></script>
   <script>
@@ -79,6 +80,14 @@
     <div id="option-btns-container">
         <button type="button" class="save-btn" onclick="editQuizName()">Save</button>
         <button type="button" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+  <div class="pop-up hide-popup" id="deletePopup">
+    <button class="popup-close">×</button>
+    <h1>Delete Quiz</h1>
+    <div id="option-btns-container">
+        <button type="button" class="save-btn" onclick="closeAllPopups()">Cancel</button>
+        <button type="button" class="delete-btn" onclick="deleteQuiz()">Delete</button>
     </div>
   </div>
   <script>

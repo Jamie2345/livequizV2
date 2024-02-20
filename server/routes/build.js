@@ -6,5 +6,6 @@ const QuizBuilderController = require('../controllers/QuizBuilderController')
 router.post('/make', QuizBuilderController.make)
 router.put('/add', QuizBuilderController.add)
 router.patch('/edit', QuizBuilderController.edit)
+router.delete('/delete', QuizBuilderController.deleteQuiz)
 
 module.exports = router

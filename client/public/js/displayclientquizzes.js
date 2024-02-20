@@ -1,24 +1,5 @@
 let currentQuizEdit = null;
 
-// handle closing the boxes
-const popupCloseBtns = document.querySelectorAll('.popup-close');
-const popupCancelBtns = document.querySelectorAll('.cancel-btn');
-const popupBoxes = document.querySelectorAll('.pop-up');
-
-function closeAllPopups() {
-  popupBoxes.forEach(popupBox => {
-    popupBox.classList.remove('active');
-  });
-}
-
-popupCloseBtns.forEach(btn => {
-  btn.addEventListener('click', closeAllPopups);
-});
-
-popupCancelBtns.forEach(btn => {
-  btn.addEventListener('click', closeAllPopups);
-});
-
 function displayClientQuizzes(quizzes) {
   console.log(quizzes);
   const resultsContainer = document.getElementById('quizzes-container');
@@ -30,6 +11,7 @@ function displayClientQuizzes(quizzes) {
 
   const namePopup = document.getElementById('namePopup');
   const nameInput = document.getElementById('edit-name-input');
+  const deletePopup = document.getElementById('deletePopup');
 
 
   console.log('resultscontainer')
@@ -60,6 +42,15 @@ function displayClientQuizzes(quizzes) {
       nameInput.value = quiz.name;
       currentQuizEdit = quiz;
     });
+
+    const deleteQuizBtn = document.createElement('button');
+    deleteQuizBtn.className = 'delete-quiz-btn';
+    deleteQuizBtn.innerHTML = 'Delete';
+    deleteQuizBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      deletePopup.classList.add('active');
+      currentQuizEdit = quiz;
+    });
  
     const quizHTML = `
     <div class="quiz-info-container">
@@ -83,12 +74,17 @@ function displayClientQuizzes(quizzes) {
           </div>
       </div>
     </div>
-    <a href="/quizbuilder/${quiz.name}/1"><button class="edit-questions-btn">Edit Questions</button></a>
+    <div class="buttons-container">
+      <a href="/quizbuilder/${quiz.name}/1"><button class="edit-questions-btn">Edit Questions</button></a>
+    </div>
 `;
 
     searchResult.innerHTML += quizHTML;
     const descriptionContainer = searchResult.querySelector('.description-container');
     descriptionContainer.appendChild(editDescriptionBtn);
+
+    const buttonsContainer = searchResult.querySelector('.buttons-container');
+    buttonsContainer.appendChild(deleteQuizBtn);
 
     const titleContainer = searchResult.querySelector('.title-container');
     titleContainer.appendChild(editNameBtn);
@@ -164,6 +160,47 @@ function editQuizName() {
 
   fetch('/api/edit', {
     method: 'PATCH',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+    credentials: 'include' // include cookies
+  })
+  .then(response => {
+  if (!response.ok) {
+      console.log(response);
+      throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+  return response.json();
+  })
+  .then(data => {
+      // Handle the response (e.g., get and use the access token)
+      console.log('edit complete')
+      console.log(data);
+      // close the box
+      closeAllPopups();
+
+      // refresh the page
+      window.location.reload();
+  });
+}
+
+function deleteQuiz() {
+  console.log('deleteQuiz')
+  const quizName = currentQuizEdit.name;
+
+  const nameInput = document.getElementById('edit-name-input');
+  const updatedName = nameInput.value;
+
+  console.log(quizName)
+  console.log(updatedName)
+
+  const data = {
+    name: quizName,
+  };
+
+  fetch('/api/delete', {
+    method: 'DELETE',
     headers: {
         'Content-Type': 'application/json'
     },

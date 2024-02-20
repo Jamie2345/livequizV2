@@ -308,14 +308,24 @@ body {
   height: 20px;
 }
 
-.edit-questions-btn {
+.edit-questions-btn, .delete-quiz-btn {
   margin-top: 30px;
   padding: 1rem;
   border-radius: .8rem;
-  background-color: var(--secondary);
   cursor: pointer;
   border: none;
-  color: var(--text-color)
+  color: var(--text-color);
+}
+
+.edit-questions-btn {
+  background-color: var(--secondary);
+}
+
+.delete-quiz-btn {
+  background-color: red;
+  margin-left: 20px;
+  max-width: 100px;
+  width: 100%;
 }
 
 .pop-up {
@@ -392,7 +402,7 @@ body {
   background-color: var(--tertiary);
 }
 
-.cancel-btn {
+.cancel-btn, .delete-btn {
   background-color: red;
 }
 
@@ -412,4 +422,12 @@ body {
 #edit-description-input::placeholder, #edit-name-input::placeholder {
   color: #000;
   text-align: left;
+}
+
+.buttons-container {
+  display: flex;
+}
+
+#deletePopup {
+  height: 30vh;
 }

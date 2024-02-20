@@ -128,10 +128,33 @@ const edit = (req, res) => {
     });
 };
 
+const deleteQuiz = (req, res) => {
+  const userId = req.userInfo.id
+  const quizName = req.body.name
+
+  console.log(userId)
+
+  console.log(quizName)
+
+  Quiz.findOneAndDelete({$and: [{name: quizName}, {creator_id: userId}]})
+  .then(foundQuiz => {
+    if (foundQuiz) {
+      res.status(200).json(foundQuiz);
+    }
+    else {
+      console.log('quiz not found')
+      res.status(404).json({
+        'message': 'A quiz with that name does not exist'
+      })
+    }
+  })
+};
+
 
 
 module.exports = {
   make,
   add,
-  edit
+  edit,
+  deleteQuiz
 }
