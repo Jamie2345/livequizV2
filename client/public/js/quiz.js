@@ -74,12 +74,6 @@ socket.on('connected', (quizToken, clientId, gameStarted) => {
                 playerContainer.className = 'player-container';
                 var textElement = document.createElement('p');
 
-                var imgElement = document.createElement('img');
-                imgElement.src = player.flag;
-                imgElement.className = 'flag-img';
-                console.log('player flag')
-                console.log(player.flag);
-            
                 textElement.innerHTML = player.name;
                 if (player.uuid == clientId) {
                     textElement.innerHTML += ' (You)';
@@ -97,7 +91,6 @@ socket.on('connected', (quizToken, clientId, gameStarted) => {
     
                 textElement.appendChild(statusSpanElement);
                 playerContainer.appendChild(textElement);
-                playerContainer.appendChild(imgElement);
                 
                 if (player.uuid == clientId) {
                     var readyButton = document.createElement('button');

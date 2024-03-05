@@ -284,17 +284,6 @@ io.on('connection', (socket) => {
   }
 
   socket.on('connectQuiz', (roomId, token) => {
-    console.log('token of user connected')
-    console.log(token);
-    console.log('socket obj')
-    console.log(socket);
-    var ipAddress = socket.handshake.address;
-    console.log(`User ip address: ${ipAddress}`);
-    if (ipAddress == '::1') {
-      ipAddress = '92.40.184.89';
-    }
-    const geo = geoip.lookup(ipAddress);
-    console.log(geo);
 
     //country: GB
     //region: ENG
@@ -302,12 +291,7 @@ io.on('connection', (socket) => {
     // try do country-region and look if theres a flag there
     // if not just do country
 
-    let country = geo.country;
-    let region = geo.region;
-    let regionCode = `${country}-${region}`
 
-
-    console.log(country, region);
 
     // https://github.com/hampusborgos/country-flags/tree/main/png100px
     // https://github.com/hampusborgos/country-flags/archive/refs/heads/main.zip
@@ -327,33 +311,12 @@ io.on('connection', (socket) => {
     if (!foundPlayer) {
       console.log('New player joining')
       userId = uuidV4();
-      console.log(country);
+
 
       const player = new Player(userId);
       console.log(`Player: ${player}`);
       // generate a new username for the user
       player.name = player.generateName(); 
-      player.country = country;
-      function updateUserFlag(flagCode) {
-        const flagPath = `../client/public/images/flags/png100px/${flagCode.toLowerCase()}.png`;
-        const absoluteFlagPath = path.resolve(__dirname, flagPath);
-        console.log(absoluteFlagPath)
-        fs.access(absoluteFlagPath, fs.constants.F_OK, (err) => {
-          if (err) {
-            console.error(`Error checking file existence: ${err}`);
-          }
-          else {
-            console.log(`File ${absoluteFlagPath} exists in the folder.`);
-            if (player.flag === undefined) {
-              let localFlag = `images/flags/png100px/${flagCode.toLowerCase()}.png`
-              player.flag = localFlag;
-              io.to(roomId).emit('updatePlayers', quizzes[roomId].players);
-            }
-          }
-        });
-      }
-      updateUserFlag(regionCode);
-      updateUserFlag(country);
       quizzes[roomId].players.push(player);
 
       
