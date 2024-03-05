@@ -38,6 +38,8 @@ function addAnswer(answerIndex) {
     closePopup();
     updateAnswers(multipleChoiceAnswers);
     console.log(answerValue);
+
+    console.log(multipleChoiceAnswers);
 }
 
 function updateAnswers(answers) {
@@ -66,30 +68,86 @@ function getNumberFromUrl(url) {
 }
 
 function editQuizQuestion(QUIZ) {
-    console.log('editing quiz question')
+    console.log('hi')
     console.log(QUIZ);
-    console.log(multipleChoiceAnswers);
-    console.log(QUIZ.multipleChoice);
+    console.log('editing quiz question')
 
     console.log(getNumberFromUrl(window.location.href))
     const questionIndex = getNumberFromUrl(window.location.href) - 1;
     QUIZ.questions[questionIndex].multipleChoice = [];
-    
-    // Then, assign each multiple choice answer to the corresponding index
-    for (var i = 0; i < multipleChoiceAnswers.length; i++) {
-        QUIZ.questions[questionIndex].multipleChoice[i] = multipleChoiceAnswers[i];
-    }
-    
-    const data = {
-        name: QUIZ.name,
-        description: QUIZ.description,
-        updatedName: QUIZ.name,
-        questions: QUIZ.questions
-    };
 
-    console.log(data);
-    fetch('/api/edit', { // forgot that i needed to change localhost to be relative path instead once I was ready to push to a server / hosting (took a whole hour to find this error)
-        method: 'PATCH',
+    console.log(multipleChoiceAnswers)
+    
+    const valuesArray = Object.values(multipleChoiceAnswers).filter(value => value !== undefined);
+
+    const questionName = document.getElementById('question-input').value;
+    const answerValue = document.getElementById('answer-input').value;
+
+    console.log(valuesArray);
+    QUIZ.questions[questionIndex] = {
+        question: questionName,
+        multipleChoice: valuesArray,
+        answer: answerValue
+    };
+    if (!valuesArray.includes(answerValue)) {
+        alert('Answer must be in one of the boxes');
+    }
+    else if (valuesArray.length == 4) {
+        console.log(QUIZ.questions[questionIndex])
+        
+        const data = {
+            name: QUIZ.name,
+            description: QUIZ.description,
+            updatedName: QUIZ.name,
+            questions: QUIZ.questions
+        };
+        console.log('questions')
+        console.log(data.questions);
+    
+        console.log(data);
+        fetch('/api/edit', { // forgot that i needed to change localhost to be relative path instead once I was ready to push to a server / hosting (took a whole hour to find this error)
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+            credentials: 'include' // include cookies
+        })
+        .then(response => {
+        if (!response.ok) {
+            console.log(response);
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+        })
+        .then(data => {
+            // Handle the response (e.g., get and use the access token)
+            console.log('edit complete')
+            console.log(data);
+        });
+    }
+    else {
+        alert('All the question boxes must be filled in');
+    }
+
+}
+
+function deletePopup() {
+    const popup = document.getElementById('delete-popup');
+    console.log(popup);
+    popup.classList.add('active');
+}
+
+function deleteQuestion(index, QUIZ) {
+    console.log(index);
+
+    const data = {
+        index: index,
+        name: QUIZ.name
+    }
+
+    fetch('/api/deleteQuestion', { // forgot that i needed to change localhost to be relative path instead once I was ready to push to a server / hosting (took a whole hour to find this error)
+        method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -104,10 +162,11 @@ function editQuizQuestion(QUIZ) {
     return response.json();
     })
     .then(data => {
-        // Handle the response (e.g., get and use the access token)
-        console.log('edit complete')
-        console.log(data);
-    });
+        console.log(data)
+        previousPage();  // go to the page before
+    })
+
+    closePopup();
 }
 
 function sumbitQuestion() {

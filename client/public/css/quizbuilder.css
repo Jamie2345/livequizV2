@@ -130,6 +130,20 @@ body {
     font-weight: 600;
 }
 
+.delete-question-btn {
+    color: var(--text-color);
+    background-color: red;
+    position: absolute;
+    top: 70px;
+    left: 50px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-weight: 600;
+}
+
 .ri-add-fill {
     font-size: 2rem;
 }
@@ -268,10 +282,42 @@ body {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-#add-question {
+#add-question, #no-delete-question {
     background-color: var(--tertiary);
 }
 
-#cancel-question {
+#cancel-question, #delete-question {
     background-color: red;
+}
+
+
+#edit-number-display {
+    background-color: var(--primary);
+    padding: 0.4rem 8rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.toggle-question-container {
+    display: flex;
+}
+
+.arrow-icon {
+    color: #fff;
+    font-size: 20px;
+}
+
+.arrow-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin: 0 15px;
+}
+
+#delete-popup {
+    text-align: center;
+}
+
+#delete-popup h1 {
+    margin-top: 20px;
 }

@@ -128,6 +128,40 @@ const edit = (req, res) => {
     });
 };
 
+const deleteQuestion = (req, res) => {
+  const userId = req.userInfo.id
+  const quizName = req.body.name
+  const index = req.body.index
+
+  Quiz.findOne({$and: [{name: quizName}, {creator_id: userId}]})
+  .then(foundQuiz => {
+    if (foundQuiz) {
+      console.log('Quiz found')
+      console.log(foundQuiz.questions)
+      // Remove the question at the specified index
+      foundQuiz.questions.splice(index, 1);
+
+      // Save the updated entity
+      foundQuiz.save()
+      .then(updatedQuiz => {
+        console.log('Question deleted successfully');
+        res.status(200).json({ message: 'Question deleted successfully', updatedQuiz });
+      })
+      .catch(error => {
+        console.error('Error saving updated quiz:', error);
+        res.status(500).json({ error: 'Internal server error' });
+      });
+      
+    }
+    else {
+      console.log('quiz not found')
+      res.status(404).json({
+        'message': 'A quiz with that name does not exist'
+      })
+    }
+  })
+}
+
 const deleteQuiz = (req, res) => {
   const userId = req.userInfo.id
   const quizName = req.body.name
@@ -156,5 +190,6 @@ module.exports = {
   make,
   add,
   edit,
+  deleteQuestion,
   deleteQuiz
 }
